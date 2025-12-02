@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loyal Greens | Men's Fashion & Apparel</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts - Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="antialiased selection:bg-orange-100 selection:text-orange-900">
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot hidden md:block"></div>
+  <div class="cursor-outline hidden md:block"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <h1 class="text-2xl md:text-4xl font-bold tracking-[0.18em] mb-6 text-[#002349]">Loyal Greens</h1>
+    <div class="w-48 md:w-64 h-[3px] bg-gray-100 overflow-hidden rounded">
+      <div class="loader-bar h-full"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-[#002349] text-white px-6 py-3 rounded shadow-2xl flex items-center gap-3 min-w-[280px]" style="display:none">
+    <i data-lucide="info" class="w-5 h-5 text-[#c6a87c]"></i>
+    <span id="toast-message" class="text-sm font-medium tracking-wide">Action performed</span>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white flex flex-col h-screen w-full md:hidden">
+    <div class="flex justify-between items-center p-4 border-b border-gray-100">
+      <img src="WhatsApp_Image_2025-11-29_at_15.03.37_ac88495e-removebg-preview.png" alt="Logo" class="h-14">
+      <button onclick="toggleMobileMenu()" class="p-2"><i data-lucide="x" class="w-6 h-6 text-[#002349]"></i></button>
+    </div>
+    <div class="flex flex-col p-8 space-y-6 text-center">
+      <a onclick="router.navigate('home')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">Home</a>
+      <a onclick="router.navigate('catalog','T-shirts')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">T-shirts</a>
+      <a onclick="router.navigate('catalog','Shirts')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">Shirts</a>
+      <a onclick="router.navigate('about')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">About</a>
+      <a onclick="router.navigate('lookbook')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">Lookbook</a>
+      <a onclick="router.navigate('contact')" class="text-2xl font-semibold text-[#002349] hover:text-[#c6a87c]">Contact</a>
+    </div>
+    <div class="mt-auto bg-gray-50 p-6 space-y-4">
+      <a href="mailto:hello@loyalgreens.example" class="w-full block text-center py-3 border border-[#002349] text-[#002349] uppercase tracking-wider text-xs font-bold rounded">Enquire</a>
+      <div class="flex justify-center gap-6 text-gray-400">
+        <i data-lucide="instagram" class="w-5 h-5"></i>
+        <i data-lucide="facebook" class="w-5 h-5"></i>
+        <i data-lucide="twitter" class="w-5 h-5"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-white/95 backdrop-blur-sm border-b border-gray-100/50">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <button class="md:hidden hoverable p-2" onclick="toggleMobileMenu()"><i data-lucide="menu" class="w-6 h-6 text-[#002349]"></i></button>
+        <div class="flex-shrink-0 flex items-center cursor-pointer hoverable group" onclick="router.navigate('home')">
+          <img src="WhatsApp_Image_2025-11-29_at_15.03.37_ac88495e-removebg-preview.png" alt="Loyal Greens" class="h-14 md:h-18 object-contain group-hover:opacity-80 transition-opacity">
+        </div>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a onclick="router.navigate('home')" class="hoverable nav-link relative text-sm font-medium text-gray-900 tracking-[0.06em] cursor-pointer uppercase">Home</a>
+          <a onclick="router.navigate('catalog','T-shirts')" class="hoverable nav-link relative text-sm font-medium text-gray-900 tracking-[0.06em] cursor-pointer uppercase">T-shirts</a>
+          <a onclick="router.navigate('catalog','Shirts')" class="hoverable nav-link relative text-sm font-medium text-gray-900 tracking-[0.06em] cursor-pointer uppercase">Shirts</a>
+          <a onclick="router.navigate('about')" class="hoverable nav-link relative text-sm font-medium text-gray-900 tracking-[0.06em] cursor-pointer uppercase">About</a>
+          <a onclick="router.navigate('lookbook')" class="hoverable nav-link relative text-sm font-medium text-gray-900 tracking-[0.06em] cursor-pointer uppercase">Lookbook</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="mailto:hello@peterengland.example" class="hidden md:inline-flex hoverable items-center gap-2 px-4 py-2 border border-[#002349] text-[#002349] text-xs font-semibold uppercase tracking-wider rounded transition-all">Enquire</a>
+          <button class="hoverable inline-flex items-center gap-2 text-gray-600 hover:text-[#002349]" onclick="router.navigate('contact')">
+            <i data-lucide="user" class="w-5 h-5"></i><span class="hidden lg:inline text-sm">Sign In</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- App container -->
+  <main id="app-container" class="pt-20 min-h-screen flex flex-col bg-white"></main>
+
+  <!-- Footer -->
+  <footer class="bg-[#002349] text-white pt-20 pb-10">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div class="space-y-6">
+          <h3 class="serif text-3xl tracking-wider">Loyal Greens</h3>
+          <p class="text-gray-300 text-sm leading-relaxed max-w-xs">Defining men's fashion since 1889. Tailoring, premium fabrics and contemporary silhouettes for the modern gentleman.</p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-6 tracking-[0.12em] text-xs uppercase text-[#c6a87c]">Collections</h4>
+          <ul class="space-y-3 text-gray-300 text-sm">
+            <li><a href="#" class="hover:text-white">New Arrivals</a></li>
+            <li><a href="#" class="hover:text-white">Wedding Edit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-6 tracking-[0.12em] text-xs uppercase text-[#c6a87c]">Support</h4>
+          <ul class="space-y-3 text-gray-300 text-sm">
+            <li><a href="#" class="hover:text-white">Track Order</a></li>
+            <li><a href="#" class="hover:text-white">Returns & Exchange</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-6 tracking-[0.12em] text-xs uppercase text-[#c6a87c]">Newsletter</h4>
+          <p class="text-gray-300 text-sm mb-4">Subscribe to receive updates and exclusive invites.</p>
+          <div class="flex border-b border-gray-600 pb-2">
+            <input type="email" placeholder="Enter your email" class="bg-transparent w-full outline-none text-white placeholder-gray-400 text-sm">
+            <button class="text-[#c6a87c] hover:text-white text-xs font-bold uppercase tracking-wider">JOIN</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-300 gap-4">
+        <p>&copy; 2025 Loyal Greens. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a class="hoverable cursor-pointer text-gray-300 hover:text-white">Privacy Policy</a>
+          <a class="hoverable cursor-pointer text-gray-300 hover:text-white">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+  <script>
+/* ---- IMAGE PRELOAD + LOADER PROGRESS ----
+   Replace the existing window.load loader block with this.
+   It preloads all images referenced in db.products and a few UI fallbacks,
+   updates the .loader-bar width as images load, and then proceeds.
+*/
+
+function preloadImagesWithProgress(options = {}) {
+  const { timeout = 6000, extraImages = [] } = options;
+
+  // gather unique image URLs from db.products
+  const imgSet = new Set();
+
+  // products may not be populated yet if called super early.
+  // but in our file db.products is created before this function is declared.
+  if (Array.isArray(db.products)) {
+    db.products.forEach(p => {
+      if (p.images && p.images.length) {
+        p.images.forEach(src => imgSet.add(src));
+      } else if (p.image) {
+        imgSet.add(p.image);
+      }
+    });
+  }
+
+  // include any extra UI images (logo, hero fallback, social icons if remote, etc.)
+  extraImages.forEach(u => imgSet.add(u));
+
+  const images = Array.from(imgSet);
+  const total = images.length || 1; // avoid divide-by-zero
+  const bar = document.querySelector('.loader-bar');
+
+  let loaded = 0;
+  let finished = false;
+
+  function tick() {
+    loaded++;
+    const pct = Math.round((loaded / total) * 100);
+    if (bar) bar.style.width = `${pct}%`;
+  }
+
+  // If no images to load, resolve immediately after small delay so animation looks natural
+  if (images.length === 0) {
+    if (bar) bar.style.width = '100%';
+    return Promise.resolve();
+  }
+
+  // Promise that resolves when all images loaded or any timeout occurs
+  const allImagesPromise = new Promise((resolve) => {
+    let resolved = false;
+    images.forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = function() {
+        // increment tick regardless of success to avoid blocking
+        tick();
+
+        // small microtask delay to ensure UI updates smoothly
+        setTimeout(() => {
+          // check if all done
+          if (!resolved && loaded >= total) {
+            resolved = true;
+            resolve({ from: 'complete' });
+          }
+        }, 30);
+      };
+      // add cache-busting only if you want to force reloads; we do NOT add one so caching works
+      img.src = src;
+    });
+
+    // Safety timeout - in case some images get stuck or blocked
+    setTimeout(() => {
+      if (!resolved) {
+        resolved = true;
+        // ensure progress bar at least reaches 95% for UX before completing
+        if (bar && loaded / total < 0.95) bar.style.width = '95%';
+        resolve({ from: 'timeout' });
+      }
+    }, timeout);
+  });
+
+  return allImagesPromise;
+}
+
+/* Replace your old window load handler with this */
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  const bar = document.querySelector('.loader-bar');
+
+  // Provide any extra UI images that aren't listed inside db.products
+  const extras = [
+    'WhatsApp_Image_2025-11-29_at_15.03.37_ac88495e-removebg-preview.png', // logo
+    // hero fallback or any other static images you want to preload
+    'assets/Men/Abstract Pattern T-shirt.jpg'
+  ];
+
+  // Start early animation for bar so user sees progress
+  setTimeout(() => {
+    if (bar) bar.style.width = '12%';
+  }, 80);
+
+  // Start preloading images + wait for completion or timeout
+  preloadImagesWithProgress({ timeout: 6000, extraImages: extras })
+    .then((info) => {
+      // ensure progress bar goes to 100% smoothly
+      if (bar) {
+        // animate to 100% using GSAP if available, otherwise direct set
+        if (window.gsap) {
+          gsap.to(bar, { width: '100%', duration: 0.45, ease: 'power2.out' });
+        } else {
+          bar.style.width = '100%';
+        }
+      }
+
+      // small delay to let the user see the 100% fill
+      setTimeout(() => {
+        // gracefully hide loader and show app
+        if (loader) {
+          if (window.gsap) {
+            gsap.to(loader, {
+              yPercent: -110,
+              duration: 0.9,
+              ease: "power4.inOut",
+              onComplete: () => {
+                try { router.render('home'); document.getElementById('app-container').classList.add('loaded'); } catch(e){ console.error(e); }
+              }
+            });
+          } else {
+            loader.style.transform = 'translateY(-120%)';
+            loader.style.opacity = 0;
+            try { router.render('home'); document.getElementById('app-container').classList.add('loaded'); } catch(e){ console.error(e); }
+          }
+        } else {
+          try { router.render('home'); document.getElementById('app-container').classList.add('loaded'); } catch(e){ console.error(e); }
+        }
+      }, 260); // brief pause after 100%
+    })
+    .catch((err) => {
+      // On unexpected error, fallback to rendering after short delay
+      console.warn('Preload failed or errored', err);
+      if (bar) bar.style.width = '100%';
+      setTimeout(() => {
+        if (loader) {
+          if (window.gsap) gsap.to(loader, { yPercent: -110, duration: 0.6, ease: "power4.inOut", onComplete: ()=>{ router.render('home'); document.getElementById('app-container').classList.add('loaded'); }});
+          else { loader.style.display = 'none'; try{router.render('home')}catch(e){} }
+        } else { try{router.render('home')}catch(e){} }
+      }, 350);
+    });
+});
+</script>
+
+</body>
+</html>
